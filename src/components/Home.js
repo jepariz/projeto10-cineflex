@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import Movie from "./Movie";
+
 
 export default function Home() {
   const [movies, setMovies] = useState([]);
@@ -26,9 +28,7 @@ export default function Home() {
       <p>Selecione o filme</p>
 
       <StyledMoviesList>
-       {movies.map((mov) =>  <StyledMovie key={mov.id}>
-            <img src={mov.posterURL} />
-          </StyledMovie>)}
+       {movies.map((mov) =>  <Movie key={mov.id}  mov={mov}/>)}
       </StyledMoviesList>
     </MoviesContainer>
   );
@@ -53,18 +53,4 @@ const StyledMoviesList = styled.ul`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px 25px;
-`;
-
-const StyledMovie = styled.li`
-  width: 145px;
-  height: 209px;
-  box-shadow: 0px 2px 4px 2px #0000001a;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  img {
-    width: 129px;
-    height: 193px;
-  }
 `;
