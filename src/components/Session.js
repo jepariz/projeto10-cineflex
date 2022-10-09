@@ -51,7 +51,7 @@ function selectSeat (id){
           {seats.map((s) => ( selectedSeat.includes(s.id) ? 
             <Selected onClick={() => selectSeat(s.id)} key={s.id}>{s.name}</Selected> : 
             (s.isAvailable === false) ? 
-            <Sold key={s.id}>{s.name}</Sold> : 
+            <Sold onClick={() => alert( "Esse assento não está disponível")} key={s.id}>{s.name}</Sold> : 
             <Available onClick={() => selectSeat(s.id)} 
             key={s.id}>{s.name}</Available>
           ))}
