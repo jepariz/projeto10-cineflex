@@ -7,8 +7,6 @@ import Movie from "./Movie";
 export default function Home() {
   const [movies, setMovies] = useState([]);
 
-  console.log(movies);
-
   useEffect(() => {
     const promise = axios.get(
       "https://mock-api.driven.com.br/api/v5/cineflex/movies"

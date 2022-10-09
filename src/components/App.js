@@ -3,6 +3,7 @@ import styled from "styled-components"
 import GlobalStyle from "../GlobalStyle";
 import {BrowserRouter, Routes, Route, Link} from "react-router-dom"
 import MovieSession from "./MovieSession";
+import Session from "./Session";
 
 
 export default function App() {
@@ -18,7 +19,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={ <Home />} />
       <Route path="/sessoes/:idFilme" element={<MovieSession />} />
-    
+      <Route path="/sessoes/:idFilme/assentos/:idSessao" element={<Session />} />
     </Routes>
     </BrowserRouter>
     </>

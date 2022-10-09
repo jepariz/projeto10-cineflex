@@ -1,5 +1,5 @@
 
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios"
 import { useEffect, useState } from "react";
@@ -12,34 +12,6 @@ export default function MovieSession() {
   const { idFilme } = useParams();
 
   console.log(movieTitle, day)
- 
-
-  // const datas = filme.map((f) => f.days.map((d) => d.weekday))
-  // console.log(datas)
- 
-
-  // const keys = Object.keys(filme).forEach(key => {
-  //   let value = filme[key]
-
-  //   console.log(`${key}: ${value}`);
-  // })
-  // console.log(keys)
-
-  // const entries = Object.values(filme)
-
-
-  // const datas = entries[5]
-  
-  // console.log(datas)
- 
- 
-
-//   entries.forEach(entry => {
-//     let key = entry[0];
-//     let value = entry[1];
-
-//     console.log(`${key}: ${value}`);
-// });
 
   useEffect(() => {
     const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${idFilme}/showtimes`)
@@ -56,7 +28,6 @@ export default function MovieSession() {
     })
   },[])
 
-
   return (
     <MovieInfoContainer>
       <p>Selecione o Horário</p>
@@ -67,19 +38,21 @@ export default function MovieSession() {
             {f.date} - {f.weekday}
           </p>
           <SessionTime>
-            <button key={f.showtimes[0].id}>{f.showtimes[0].name}</button>
-            <button key={f.showtimes[1].id}>{f.showtimes[1].name}</button>
+            <Link to={`assentos/${f.showtimes[0].id}`}><button key={f.showtimes[0].id}>{f.showtimes[0].name}</button></Link>
+            <Link to={`assentos/${f.showtimes[1].id}`}><button key={f.showtimes[1].id}>{f.showtimes[1].name}</button></Link>
+           
           </SessionTime></div>)}
         </SessionInfo>
 
       </MovieSessionsContainer>
 
-      <Footer>
+      <StyledFooter>
         <div>
-          <img src={movieImage} />
+          <img src={movieImage} alt={movieTitle} />
         </div>
         <p>{movieTitle}</p>
-      </Footer>
+      </StyledFooter>
+     
     </MovieInfoContainer>
   );
 }
@@ -130,7 +103,7 @@ const SessionTime = styled.div`
   }
 `;
 
-const Footer = styled.div`
+const StyledFooter = styled.div`
   width: 100%;
   height: 117px;
   background-color: #dfe6ed;
