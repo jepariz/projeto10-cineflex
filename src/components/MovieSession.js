@@ -32,15 +32,15 @@ export default function MovieSession() {
         <SessionInfo>
           {day.map((f) => (
             <div key={f.id}>
-              <p>
+              <p data-identifier="session-date">
                 {f.date} - {f.weekday}
               </p>
               <SessionTime>
                 <Link to={`assentos/${f.showtimes[0].id}`}>
-                  <button key={f.showtimes[0].id}>{f.showtimes[0].name}</button>
+                  <button data-identifier="hour-minute-btn"key={f.showtimes[0].id}>{f.showtimes[0].name}</button>
                 </Link>
                 <Link to={`assentos/${f.showtimes[1].id}`}>
-                  <button key={f.showtimes[1].id}>{f.showtimes[1].name}</button>
+                  <button data-identifier="hour-minute-btn" key={f.showtimes[1].id}>{f.showtimes[1].name}</button>
                 </Link>
               </SessionTime>
             </div>
@@ -50,9 +50,9 @@ export default function MovieSession() {
 
       <StyledFooter>
         <div>
-          <img src={movieImage} alt={movieTitle} />
+          <img data-identifier="movie-img-preview" src={movieImage} alt={movieTitle} />
         </div>
-        <p>{movieTitle}</p>
+        <p data-identifier="movie-and-session-infos-preview">{movieTitle}</p>
       </StyledFooter>
     </MovieInfoContainer>
   );

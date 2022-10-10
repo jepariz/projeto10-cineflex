@@ -5,7 +5,7 @@ export default function Movie({ mov }) {
   return (
     <Link to={`/sessoes/${mov.id}`}>
       <StyledMovie key={mov.id}>
-        <img src={mov.posterURL} alt={mov.title} />
+        <img data-identifier="movie-outdoor" src={mov.posterURL} alt={mov.title} />
       </StyledMovie>
     </Link>
   );

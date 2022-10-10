@@ -76,33 +76,33 @@ export default function Session({
         <StyledSeats>
           {seats.map((s, index) =>
             selectedSeat.includes(s.id) ? (
-              <Selected onClick={() => selectSeat(s.id, index)} key={s.id}>
+              <Selected data-identifier="seat" onClick={() => selectSeat(s.id, index)} key={s.id}>
                 {s.name}
               </Selected>
             ) : s.isAvailable === false ? (
               <Sold
                 onClick={() => alert("Esse assento não está disponível")}
-                key={s.id}
+                data-identifier="seat" key={s.id}
               >
                 {s.name}
               </Sold>
             ) : (
-              <Available onClick={() => selectSeat(s.id, index)} key={s.id}>
+              <Available data-identifier="seat" onClick={() => selectSeat(s.id, index)} key={s.id}>
                 {s.name}
               </Available>
             )
           )}
-          <StyledKey>
+          <StyledKey >
             <div>
-              <Selected></Selected>
+              <Selected data-identifier="seat-selected-subtitle"></Selected>
               <p>Selecionado</p>
             </div>
             <div>
-              <Available></Available>
+              <Available data-identifier="seat-available-subtitle"></Available>
               <p>Disponível</p>
             </div>
             <div>
-              <Sold></Sold>
+              <Sold data-identifier="seat-unavailable-subtitle"></Sold>
               <p>Indisponível</p>
             </div>
           </StyledKey>
@@ -110,7 +110,7 @@ export default function Session({
         <Form>
           <div>
             <p>Nome do comprador: </p>
-            <input
+            <input data-identifier="buyer-name-input"
               placeholder="Digite seu nome..."
               type="text"
               value={name}
@@ -119,7 +119,7 @@ export default function Session({
           </div>
           <div>
             <p>CPF do comprador: </p>
-            <input
+            <input data-identifier="buyer-cpf-input"
               placeholder="Digite seu CPF..."
               type="number"
               value={cpf}
@@ -127,15 +127,15 @@ export default function Session({
             />
           </div>
           <Link to={"/sucesso"}>
-            <button onClick={() => orderTickets()}>Reservar assento(s)</button>
+            <button data-identifier="reservation-btn" onClick={() => orderTickets()}>Reservar assento(s)</button>
           </Link>
         </Form>
       </SeatsContainer>
       <StyledFooter>
         <PosterContainer>
-          <img src={poster} alt={title} />
+          <img data-identifier="movie-img-preview" src={poster} alt={title} />
         </PosterContainer>
-        <div>
+        <div data-identifier="movie-and-session-infos-preview">
           <p>{title}</p>
           <p>
             {day}-{time}

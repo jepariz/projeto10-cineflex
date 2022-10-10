@@ -30,26 +30,26 @@ export default function Success({
       <OrderDetails>
         <div>
           <h3>Filme e sessão</h3>
-          <p>{title}</p>
-          <p>
+          <p data-identifier="movie-session-infos-reserve-finished">{title}</p>
+          <p data-identifier="movie-session-infos-reserve-finished">
             {day} {time}
           </p>
         </div>
         <div>
           <h3>Ingressos</h3>
           {seatNumber.map((s) => (
-            <p key={s}>Assento {s + 1}</p>
+            <p data-identifier="seat-infos-reserve-finished" key={s}>Assento {s + 1}</p>
           ))}
         </div>
         <div>
           <h3>Comprador</h3>
-          <p>{name}</p>
-          <p>CPF: {cpf}</p>
+          <p data-identifier="buyer-infos-reserve-finished">{name}</p>
+          <p data-identifier="buyer-infos-reserve-finished">CPF: {cpf}</p>
         </div>
       </OrderDetails>
 
       <Link to={"/"}>
-        <button onClick={() => clearData()}>Voltar pra Home</button>
+        <button data-identifier="back-to-home-btn" onClick={() => clearData()}>Voltar pra Home</button>
       </Link>
     </Order>
   );
