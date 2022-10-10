@@ -2,14 +2,30 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function Success({ title, day, time, seatNumber, name, cpf }) {
+export default function Success({
+  title,
+  day,
+  time,
+  seatNumber,
+  name,
+  cpf,
+  setSelectedSeat,
+  setName,
+  setCpf,
+}) {
+  function clearData() {
+    setSelectedSeat([]);
+    setName("")
+    setCpf("")
+  }
+
   return (
     <Order>
       <h2>
         Pedido feito <br />
         com sucesso!
       </h2>
-      <div>
+      <OrderDetails>
         <div>
           <h3>Filme e sessão</h3>
           <p>{title}</p>
@@ -20,7 +36,7 @@ export default function Success({ title, day, time, seatNumber, name, cpf }) {
         <div>
           <h3>Ingressos</h3>
           {seatNumber.map((s) => (
-            <p key={s}>Assento {s}</p>
+            <p key={s}>Assento {s + 1}</p>
           ))}
         </div>
         <div>
@@ -28,10 +44,10 @@ export default function Success({ title, day, time, seatNumber, name, cpf }) {
           <p>{name}</p>
           <p>CPF: {cpf}</p>
         </div>
-      </div>
+      </OrderDetails>
 
       <Link to={"/"}>
-        <button>Voltar pra Home</button>
+        <button onClick={() => clearData()}>Voltar pra Home</button>
       </Link>
     </Order>
   );
@@ -52,10 +68,6 @@ const Order = styled.div`
     color: #247a6b;
     text-align: center;
     line-height: 28px;
-  }
-
-  div {
-    margin-top: 30px;
   }
 
   h3 {
@@ -79,7 +91,16 @@ const Order = styled.div`
     border: none;
     background-color: #e8833a;
     color: #fff;
-    align-self: center;
     font-size: 18px;
+  }
+`;
+
+const OrderDetails = styled.div`
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+
+  div {
+    margin-top: 30px;
   }
 `;

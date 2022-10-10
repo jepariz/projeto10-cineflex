@@ -62,6 +62,9 @@ export default function App() {
                 seatNumber={seatNumber}
                 name={name}
                 cpf={cpf}
+                setSelectedSeat={setSelectedSeat}
+                setName={setName}
+                setCpf={setCpf}
               />
             }
           />
