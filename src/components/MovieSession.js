@@ -11,13 +11,10 @@ export default function MovieSession() {
   const [movieImage, setMovieImage] = useState("")
   const { idFilme } = useParams();
 
-  console.log(movieTitle, day)
-
   useEffect(() => {
     const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${idFilme}/showtimes`)
 
     promise.then((res) => {
-      console.log(res.data.days)
       setMovieTitle(res.data.title)
       setMovieImage(res.data.posterURL)
       setDay(res.data.days)
@@ -135,6 +132,6 @@ const StyledFooter = styled.div`
   p {
     font-size: 26px;
     color: #293845;
-    align-self: center;
+   
   }
 `;

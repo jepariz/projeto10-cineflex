@@ -1,19 +1,29 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 
-export default function Session() {
+export default function Session({
+  seats,
+  setSeats,
+  title,
+  setTitle,
+  day,
+  setDay,
+  time,
+  setTime,
+  selectedSeat,
+  setSelectedSeat,
+  seatNumber,
+  setSeatNumber,
+  name,
+  setName,
+  cpf,
+  setCpf,
+}) {
   const { idSessao } = useParams();
-  const [seats, setSeats] = useState([]);
-  const [title, setTitle] = useState("");
   const [poster, setPoster] = useState("");
-  const [day, setDay] = useState("");
-  const [time, setTime] = useState("");
-  const [selectedSeat, setSelectedSeat] = useState([])
-  const [available, setAvailable] = useState(false)
-  console.log(selectedSeat)
- 
+  console.log(name, cpf);
 
   useEffect(() => {
     const promise = axios.get(
@@ -21,7 +31,6 @@ export default function Session() {
     );
 
     promise.then((res) => {
-      console.log(res.data);
       setSeats(res.data.seats);
       setTitle(res.data.movie.title);
       setPoster(res.data.movie.posterURL);
@@ -34,27 +43,55 @@ export default function Session() {
     });
   }, []);
 
-function selectSeat (id){
-    let seat = [...selectedSeat, id]
-    setSelectedSeat(seat) 
-    if(selectedSeat.includes(id)){
-     let novoArray = selectedSeat.filter((seat) => seat !== id )
-     setSelectedSeat(novoArray)
+  function selectSeat(id, index) {
+    let seat = [...selectedSeat, id];
+    setSelectedSeat(seat);
+    setSeatNumber([...seatNumber, index]);
+    if (selectedSeat.includes(id)) {
+      let novoArrayIds = selectedSeat.filter((seat) => seat !== id);
+      setSelectedSeat(novoArrayIds);
+      let novoArrayNumbers = seatNumber.filter((seat) => seat !== index);
+      setSeatNumber(novoArrayNumbers);
     }
-}
+  }
+
+  function orderTickets() {
+    const promise = axios.post(
+      "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",
+      {
+        ids: [selectedSeat],
+        name: name,
+        cpf: cpf,
+      }
+    );
+    promise.then((res) => console.log(res.data));
+
+    promise.catch((err) => console.log(err.response.data));
+  }
 
   return (
     <>
       <SeatsContainer>
         <p>Selecione o(s) assento(s)</p>
         <StyledSeats>
-          {seats.map((s) => ( selectedSeat.includes(s.id) ? 
-            <Selected onClick={() => selectSeat(s.id)} key={s.id}>{s.name}</Selected> : 
-            (s.isAvailable === false) ? 
-            <Sold onClick={() => alert( "Esse assento não está disponível")} key={s.id}>{s.name}</Sold> : 
-            <Available onClick={() => selectSeat(s.id)} 
-            key={s.id}>{s.name}</Available>
-          ))}
+          {seats.map((s, index) =>
+            selectedSeat.includes(s.id) ? (
+              <Selected onClick={() => selectSeat(s.id, index)} key={s.id}>
+                {s.name}
+              </Selected>
+            ) : s.isAvailable === false ? (
+              <Sold
+                onClick={() => alert("Esse assento não está disponível")}
+                key={s.id}
+              >
+                {s.name}
+              </Sold>
+            ) : (
+              <Available onClick={() => selectSeat(s.id, index)} key={s.id}>
+                {s.name}
+              </Available>
+            )
+          )}
           <StyledKey>
             <div>
               <Selected></Selected>
@@ -70,7 +107,29 @@ function selectSeat (id){
             </div>
           </StyledKey>
         </StyledSeats>
-        
+        <Form>
+          <div>
+            <p>Nome do comprador: </p>
+            <input
+              placeholder="Digite seu nome..."
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div>
+            <p>CPF do comprador: </p>
+            <input
+              placeholder="Digite seu CPF..."
+              type="number"
+              value={cpf}
+              onChange={(e) => setCpf(e.target.value)}
+            />
+          </div>
+          <Link to={"/sucesso"}>
+            <button onClick={() => orderTickets()}>Reservar assento(s)</button>
+          </Link>
+        </Form>
       </SeatsContainer>
       <StyledFooter>
         <PosterContainer>
@@ -130,6 +189,7 @@ const PosterContainer = styled.div`
 
 const SeatsContainer = styled.div`
   width: 100%;
+  height: 730px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -203,4 +263,51 @@ const Sold = styled.div`
   justify-content: center;
   align-items: center;
   justify-self: center;
+`;
+
+const Form = styled.div`
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 20px;
+  gap: 10px;
+  align-items: center;
+
+  p {
+    font-size: 18px;
+    color: #293845;
+  }
+
+  input {
+    margin-top: 5px;
+    width: 327px;
+    height: 51px;
+    border: 1px solid #d4d4d4;
+    border-radius: 3px;
+    font-size: 18px;
+    box-sizing: border-box;
+    padding: 10px;
+    color: #293845;
+
+    &:placeholder-shown {
+      font-size: 18px;
+      color: #afafaf;
+      font-style: italic;
+    }
+  }
+
+  button {
+    margin-top: 30px;
+    width: 225px;
+    height: 42px;
+    background-color: #e8833a;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 18px;
+    align-self: center;
+    justify-self: center;
+  }
 `;
