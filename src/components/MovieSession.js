@@ -1,46 +1,51 @@
-
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios"
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function MovieSession() {
-
   const [day, setDay] = useState([]);
-  const [movieTitle, setMovieTitle] = useState("")
-  const [movieImage, setMovieImage] = useState("")
+  const [movieTitle, setMovieTitle] = useState("");
+  const [movieImage, setMovieImage] = useState("");
   const { idFilme } = useParams();
 
   useEffect(() => {
-    const promise = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${idFilme}/showtimes`)
+    const promise = axios.get(
+      `https://mock-api.driven.com.br/api/v5/cineflex/movies/${idFilme}/showtimes`
+    );
 
     promise.then((res) => {
-      setMovieTitle(res.data.title)
-      setMovieImage(res.data.posterURL)
-      setDay(res.data.days)
-    })
+      setMovieTitle(res.data.title);
+      setMovieImage(res.data.posterURL);
+      setDay(res.data.days);
+    });
 
     promise.catch((err) => {
-      console.log(err.response.data)
-    })
-  },[])
+      console.log(err.response.data);
+    });
+  }, []);
 
   return (
     <MovieInfoContainer>
       <p>Selecione o Horário</p>
       <MovieSessionsContainer>
-       
         <SessionInfo>
-         {day.map((f) => < div key={f.id}><p>
-            {f.date} - {f.weekday}
-          </p>
-          <SessionTime>
-            <Link to={`assentos/${f.showtimes[0].id}`}><button key={f.showtimes[0].id}>{f.showtimes[0].name}</button></Link>
-            <Link to={`assentos/${f.showtimes[1].id}`}><button key={f.showtimes[1].id}>{f.showtimes[1].name}</button></Link>
-           
-          </SessionTime></div>)}
+          {day.map((f) => (
+            <div key={f.id}>
+              <p>
+                {f.date} - {f.weekday}
+              </p>
+              <SessionTime>
+                <Link to={`assentos/${f.showtimes[0].id}`}>
+                  <button key={f.showtimes[0].id}>{f.showtimes[0].name}</button>
+                </Link>
+                <Link to={`assentos/${f.showtimes[1].id}`}>
+                  <button key={f.showtimes[1].id}>{f.showtimes[1].name}</button>
+                </Link>
+              </SessionTime>
+            </div>
+          ))}
         </SessionInfo>
-
       </MovieSessionsContainer>
 
       <StyledFooter>
@@ -49,7 +54,6 @@ export default function MovieSession() {
         </div>
         <p>{movieTitle}</p>
       </StyledFooter>
-     
     </MovieInfoContainer>
   );
 }

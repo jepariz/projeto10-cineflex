@@ -3,7 +3,6 @@ import styled from "styled-components";
 import axios from "axios";
 import Movie from "./Movie";
 
-
 export default function Home() {
   const [movies, setMovies] = useState([]);
 
@@ -26,7 +25,9 @@ export default function Home() {
       <p>Selecione o filme</p>
 
       <StyledMoviesList>
-       {movies.map((mov) =>  <Movie key={mov.id}  mov={mov}/>)}
+        {movies.map((mov) => (
+          <Movie key={mov.id} mov={mov} />
+        ))}
       </StyledMoviesList>
     </MoviesContainer>
   );

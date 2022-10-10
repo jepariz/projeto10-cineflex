@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export default function Movie({mov}) {
-    
+export default function Movie({ mov }) {
   return (
     <Link to={`/sessoes/${mov.id}`}>
       <StyledMovie key={mov.id}>
