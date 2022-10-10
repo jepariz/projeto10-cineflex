@@ -12,11 +12,13 @@ export default function Success({
   setSelectedSeat,
   setName,
   setCpf,
+  setSeatNumber
 }) {
   function clearData() {
     setSelectedSeat([]);
     setName("")
     setCpf("")
+    setSeatNumber([])
   }
 
   return (

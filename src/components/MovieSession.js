@@ -132,6 +132,6 @@ const StyledFooter = styled.div`
   p {
     font-size: 26px;
     color: #293845;
-   
+    align-self: center;
   }
 `;
