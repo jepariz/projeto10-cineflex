@@ -59,7 +59,7 @@ export default function Session({
     const promise = axios.post(
       "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",
       {
-        ids: [selectedSeat],
+        ids: selectedSeat,
         name: name,
         cpf: cpf,
       }
